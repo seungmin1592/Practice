@@ -13,6 +13,7 @@ where e.deptno = d.deptno and e.ename = 'SCOTT'
 select e.ename, d.dname, d.loc
 from emp e inner join dept d on
 e.deptno = d.deptno
+where e.ename = 'SCOTT'
 ;
 
 
