@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class AdminSalesMenu {
 	static void AdminSalesMenu() {
 		System.out.println("=========관리자 매출 관리 메뉴=========");
-		System.out.println("1번 : 일일 매출 | 2번 : 월 별 매출");
+		System.out.println("1번 : 일일 매출 | 2번 : 월 별 매출 ");
 		System.out.println("메뉴를 입력하세요 : ");
 		Scanner sc = new Scanner(System.in);
 		

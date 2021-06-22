@@ -17,9 +17,17 @@ public class AdminMemberMenu {
 		Scanner sc = new Scanner(System.in);
 		
 		int choice = sc.nextInt();
+		
 		switch(choice) {
 			case 1 :
 				manager.AdminMemberList();
+				
+				System.out.println("");
+				int choice2 = sc.nextInt();
+				switch(choice2) {
+					case 1: 
+						
+				}
 				break;
 			case 2 :
 				manager.AdminMemberDel();
