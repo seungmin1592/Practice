@@ -7,10 +7,9 @@ public class AdminMember {
 	private String name;
 	private String phonenum;
 	private String email;
-	
+
 	
 	public AdminMember(int idx, String id, String pw, String name, String phonenum, String email) {
-		super();
 		this.idx = idx;
 		this.id = id;
 		this.pw = pw;
@@ -18,6 +17,8 @@ public class AdminMember {
 		this.phonenum = phonenum;
 		this.email = email;
 	}
+	
+
 
 
 	public int getIdx() {

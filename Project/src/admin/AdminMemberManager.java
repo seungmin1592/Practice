@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class AdminMemberManager {
 	private AdminMemberDao dao;
 	private Scanner sc;
@@ -54,7 +55,7 @@ public class AdminMemberManager {
 	// 회원 정보 리스트 출력
 	// 삭제할 데이터의 회원번호 입력 
 	// 해당 회원번호의 데이터 delete
-	void AdminMemberDel() {
+	void AdminMemberUpdate() {
 		// Connection 객체 생성 -> 트렌젝션 처리
 		Connection conn = null;
 
@@ -67,13 +68,30 @@ public class AdminMemberManager {
 			conn = DriverManager.getConnection(jdbcUrl, user, pw);
 			
 			AdminMemberList();
-			System.out.println("삭제를 원하시는 회원번호를 입력해주세요.");
+			System.out.println("수정을 원하시는 회원번호를 입력해주세요.");
 			int idx = Integer.parseInt(sc.nextLine());
 			
-			int result = dao.deleteMember(conn, idx);
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.println("수정 할 목록 번호를 입력하세요 : ");
+			System.out.println("1번 : ID, 2번 : PW, 3번 : 이름, 4번 : 전화번호, 5번 : 이메일");
+
+			int choice = sc.nextInt();
+			
+			
+			
+			System.out.println("수정 할 값을 입력하세요 ");
+			
+			String change = sc.nextLine();
+			
+			AdminMember member = new AdminMember();
+			
+			
+			
+			int result = dao.changeMember(conn,  idx);
 			
 			if(result>0) {
-				System.out.println("삭제되었습니다.");
+				System.out.println("수정되었습니다.");
 			} else {
 				System.out.println("해당 부서의 정보가 없습니다.");
 			}

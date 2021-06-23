@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AdminMemberDao {
 	// 싱글톤 패턴 : 여러개의 인스턴스를 생성하지 못하도록 하는 코딩 스타일
@@ -85,24 +86,45 @@ public class AdminMemberDao {
 		// 2. AdminMember 테이블의 데이터를 삭제
 		// 삭제된 행의 개수를 반환
 		// 사용자로부터 idx 받아서 처리
-		int deleteMember(Connection conn, int idx) {
+		int changeMember(Connection conn,  int idx) {
 			
 			int result = 0;
 			// 데이터 베이스 처리 sql
 			PreparedStatement pstmt = null;
 			
-			String sql = "delete from member where idx = ? ";
 			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, idx);
 				
-				result = pstmt.executeUpdate();
+				String sql;
+				
+				switch(1) {
+					case 1 :
+						sql = "update member set id=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setString(1, change);
+						
+						//result = pstmt.executeUpdate();
+					/*	
+					case 2: 
+						sql = "update member set pw=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setString(1, change);
+						
+						result = pstmt.executeUpdate();
+						
+					case 3 :
+						sql = "update member set name=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setString(1, change);
+						
+						result = pstmt.executeUpdate();
+						*/
+				}
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				if( pstmt != null) {
+				if(pstmt != null) {
 					try {
 						pstmt.close();
 					} catch (SQLException e) {
