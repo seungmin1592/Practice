@@ -1,6 +1,8 @@
 package member;
 
-public class MemberDTO {
+public class Member {
+
+	
 
 	private int idx;
 	private String id;
@@ -9,6 +11,24 @@ public class MemberDTO {
 	private String email;
 	private String phonenum;
 	
+
+	public Member(String id, String password, String name, String email, String phonenum) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phonenum = phonenum;
+	}
+	public Member(int idx, String password, String name, String email, String phonenum,String id ) {
+		this.idx = idx;
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phonenum = phonenum;
+		
+	}
 	
 	public int getIdx() {
 		return idx;
@@ -47,21 +67,10 @@ public class MemberDTO {
 		this.phonenum = phonenum;
 	}
 	
-	public MemberDTO(int idx, String password, String name, String email, String phonenum,String id ) {
-		super();
-		this.idx = idx;
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phonenum = phonenum;
-		
-	}
+	
 	@Override
 	public String toString() {
-		return "MemberDTO [idx=" + idx + ", id=" + id + ", password=" + password + ", name=" + name + ", email=" + email
+		return "Member [idx=" + idx + ", id=" + id + ", password=" + password + ", name=" + name + ", email=" + email
 				+ ", phonenum=" + phonenum + "]";
 	}
-	
-
 }

@@ -2,6 +2,8 @@ package admin;
 
 import java.util.Scanner;
 
+
+// 버려
 public class AdminSalesMenu {
 	static void AdminSalesMenu() {
 		System.out.println("=========관리자 매출 관리 메뉴=========");

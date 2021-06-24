@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AdminMemberDao {
 	// 싱글톤 패턴 : 여러개의 인스턴스를 생성하지 못하도록 하는 코딩 스타일
@@ -22,10 +21,8 @@ public class AdminMemberDao {
 		public static AdminMemberDao getInstance() {
 			return dao;
 		}
-		
-		
-		
 
+		
 		// 1. 전체 데이터 검색 기능
 		// 반환 타입 List<Dept>
 		// 매개변수 - Connection 객체 : Statement
@@ -36,6 +33,11 @@ public class AdminMemberDao {
 			// 데이터 베이스의 Member테이블 이용 select 결과를 -> list 저장
 			Statement stmt = null;
 			ResultSet rs = null;
+			
+			// 2. 연결
+			String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String pw = "tiger";
 
 			try {
 				stmt = conn.createStatement();
@@ -83,48 +85,34 @@ public class AdminMemberDao {
 		}
 		
 		
-		// 2. AdminMember 테이블의 데이터를 삭제
-		// 삭제된 행의 개수를 반환
-		// 사용자로부터 idx 받아서 처리
-		int changeMember(Connection conn,  int idx) {
+		// 2. AdminMember 테이블의 리스트 출력
+		// 사용자로부터 idx 받아서 해당 회원 휴면계정으로 전환
+		// 휴면계정 : 회원번호(idx)제외하고 모든 값을 0000으로 변경
+		int dormancyMember(Connection conn, AdminMember am) {
 			
 			int result = 0;
 			// 데이터 베이스 처리 sql
 			PreparedStatement pstmt = null;
 			
+			// 2. 연결
+			String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String pw = "tiger";
+
 			try {
+				String Sql = "UPDATE MEMBER SET ID = '0000', PW = '0000', NAME = '휴면', PHONENUM = '0000',  EMAIL = '0000' WHERE idx = ?";
 				
-				String sql;
-				
-				switch(1) {
-					case 1 :
-						sql = "update member set id=?";
-						pstmt = conn.prepareStatement(sql);
-						pstmt.setString(1, change);
-						
-						//result = pstmt.executeUpdate();
-					/*	
-					case 2: 
-						sql = "update member set pw=?";
-						pstmt = conn.prepareStatement(sql);
-						pstmt.setString(1, change);
-						
-						result = pstmt.executeUpdate();
-						
-					case 3 :
-						sql = "update member set name=?";
-						pstmt = conn.prepareStatement(sql);
-						pstmt.setString(1, change);
-						
-						result = pstmt.executeUpdate();
-						*/
-				}
+				pstmt = conn.prepareStatement(Sql);
+				pstmt.setInt(1, am.getIdx());
+					
+				result = pstmt.executeUpdate();
+
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				if(pstmt != null) {
+				if( pstmt != null) {
 					try {
 						pstmt.close();
 					} catch (SQLException e) {
