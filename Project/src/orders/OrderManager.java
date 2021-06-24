@@ -32,7 +32,7 @@ public class OrderManager {
 
 	void orderinsert() {
 		Connection conn = null;
-
+		arr.clear();
 		try {
 			Order or =null;
 
@@ -65,7 +65,7 @@ public class OrderManager {
 				String input = sc.next();
 				
 
-				if (input.equalsIgnoreCase(	"1")) {
+				if (input.equals("1")) {
 					
 					System.out.println();
 					continue;
