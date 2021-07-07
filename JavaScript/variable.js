@@ -6,7 +6,7 @@
 'use strict';
 
 
-// 2. Variable
+// 2. Variable r/w(read/write)
 // let (added in ES6)
 
 let globalName = 'global name';
@@ -35,7 +35,7 @@ console.log(globalName);
 console.log(age);
 
 
-// 3. Constants
+// 3. Constant (read)
 // 한번 선언할 경우 변경 x
 // immutable date type
 
