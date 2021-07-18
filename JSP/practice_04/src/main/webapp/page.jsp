@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,20 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- jsp 선언문 -->
-	<%!
-		int i = 10;
-		String str = "ABCEDF";
-	%>
-	
-	<!-- jsp 스크립틀릿문 -->
+	<!-- page 지시자 -->
+	<!-- Arrays를 import -->
 	<%
-		out.println("i = " + i + "<br>");
-		out.println("str = " + str);
+		int[] arr = {10,20,30};
+		out.println(Arrays.toString(arr));
 	%>
-	
-	<!-- jsp 표현식 -->
-	i = <%= i%><br>
-	str = <%= str%><br>
 </body>
 </html>

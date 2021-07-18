@@ -7,20 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- jsp 선언문 -->
-	<%!
-		int i = 10;
-		String str = "ABCEDF";
-	%>
-	
-	<!-- jsp 스크립틀릿문 -->
-	<%
-		out.println("i = " + i + "<br>");
-		out.println("str = " + str);
-	%>
-	
-	<!-- jsp 표현식 -->
-	i = <%= i%><br>
-	str = <%= str%><br>
+	<h1>include01.jsp 페이지입니다.</h1>
 </body>
 </html>

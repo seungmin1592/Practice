@@ -7,20 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- jsp 선언문 -->
-	<%!
-		int i = 10;
-		String str = "ABCEDF";
-	%>
-	
-	<!-- jsp 스크립틀릿문 -->
-	<%
-		out.println("i = " + i + "<br>");
-		out.println("str = " + str);
-	%>
-	
-	<!-- jsp 표현식 -->
-	i = <%= i%><br>
-	str = <%= str%><br>
+	<!-- include 지시자 -->
+	<!-- include를 이용해서 다른 페이지의 내용을 가져올 수 있다 -->
+	<h1>include.jsp입니다.</h1>
+	<%@ include file="include01.jsp" %>
+	<h1>include.jsp입니다.</h1>
 </body>
 </html>
