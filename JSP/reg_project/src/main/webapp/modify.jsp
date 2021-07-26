@@ -49,27 +49,8 @@
 		<div>
 			비밀번호 : <input type="text" name="pw">
 		</div>
-		<div>
-			전화번호 : <input type="text" name="phone1" value="<%=phone1 %>"> - 
-			<input type="text" name="phone2" value="<%= phone2 %>"> - 
-			<input type="text" name="phone3" value="<%= phone3 %>">
-		</div>
-		<div>
-			성별 : 
-			<%
-				if(gender.equals("남자")){
-					%>
-					<input type="radio" name="gender" value="남자" checked>
-					<input type="radio" name="gender" value="여자">
-					<%
-				} else {
-					%>
-					<input type="radio" name="gender" value="남자">
-					<input type="radio" name="gender" value="여자" checked>
-					<%
-				}
-			%>
-		</div>
+		
+		
 		
 		<input type="submit">
 		
