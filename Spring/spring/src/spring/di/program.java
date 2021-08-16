@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.di.entity.Exam;
@@ -27,7 +28,9 @@ public class program {
 		*/
 		
 		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("spring/di/setting.xml");
+				new AnnotationConfigApplicationContext(NewlectDIConfig.class);
+				//new ClassPathXmlApplicationContext("spring/di/setting.xml");
+				
 		
 		//Exam exam = context.getBean(Exam.class);
 		//System.out.println(exam.toString());
