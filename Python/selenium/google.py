@@ -5,9 +5,13 @@ import time
 import urllib.request
 
 # 크롬 웹드라이버 연결
+options = webdriver.ChromeOptions()
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
 driver = webdriver.Chrome(
-    r"C:\Users\User\Documents\GitHub\Practice\Python\selenium\chromedriver.exe")
+    options=options, executable_path=r"C:\Users\User\Documents\GitHub\Practice\Python\selenium\chromedriver.exe")
 driver.get("https://map.naver.com/v5/search")
+
 
 # 시간 지연
 time.sleep(2)
@@ -19,32 +23,45 @@ elem.send_keys("마포구 헬스장")
 elem.send_keys(Keys.RETURN)
 
 
-for p in range(20):
-    # 5초 delay
-    time.sleep(2)
+#
+# 5초 delay
+time.sleep(4)
 
-    html = driver.page_source
+html = driver.page_source
 
-    soup = BeautifulSoup(html, "html.parser")
+soup = BeautifulSoup(html, "html.parser")
 
-    contents = soup.select(
-        "#_pcmap_list_scroll_container ._22p-O._2NEjP")
+# list_iframe으로 전환
+list_iframe = driver.find_element_by_id('searchIframe')
+driver.switch_to.frame(list_iframe)
 
-    for content in contents:
-        search_box_html = s.select_one(".search_box")
+# detail_iframe link
+contents = driver.find_elements_by_css_selector('._3ZU00 ._3LMxZ:first-child')
 
-        name = search_box_html.select_one(
-            ".title_box .search_title .search_title_text").text
-        print("식당명: " + name)
-        try:
-            phone = search_box_html.select_one(".search_text_box .phone").text
-        except:
-            phone = "NULL"
-        print("전화번호: " + phone)
-        address = search_box_html.select_one(".ng-star-inserted .address").text
-        print("주소: " + address)
+print(len(contents))
 
-        print("--"*30)
+count = 1
+for content in contents:
+    count += 1
+    print(count)
+    content.click()
+    time.sleep(3)
+
+
+# detail_box_in = content.select_one("._3LMxZ")
+
+# name = search_box_html.select_one(
+#     ".title_box .search_title .search_title_text").text
+# print("식당명: " + name)
+# try:
+#     phone = search_box_html.select_one(".search_text_box .phone").text
+# except:
+#     phone = "NULL"
+# print("전화번호: " + phone)
+# address = search_box_html.select_one(".ng-star-inserted .address").text
+# print("주소: " + address)
+
+# print("--"*30)
 
 
 # images = driver.find_elements_by_css_selector(".rg_i.Q4LuWd")
