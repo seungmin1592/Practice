@@ -96,8 +96,49 @@ print(hello2)
 
 print("")
 print('================= if/else ======================')
+# if/else
 def plus1(a, b):
   if type(b) is int or type(b) is float:
     return a + b
   else :
-    return none
+    return None
+
+print(plus1(1,2))
+print(plus1(1,'2'))
+
+
+print("")
+print('================= elif ======================')
+def age_check(age) :
+  print(f"you are {age}")
+  if age < 18 :
+    print("you can drink")
+  elif age == 18 : 
+    print("you are new to this")
+  elif age > 20 and age < 25:
+    print("you are still kind of young")
+  else :
+    print("enjoy your drink")
+
+age_check(40)  
+
+
+print("")
+print('================= for ======================')
+days1 = ["Mon","Tue","Wed","Thur","Fri"]
+
+for day in days1:
+  if day is "Wed":
+    break
+  else :
+    print(day)
+
+
+print("")
+print('================= module ======================')
+
+#import math
+from math import ceil, fsum
+
+print(ceil(1.2))
+print(sum([3,4]))
