@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
-import time
+import time 
 import urllib.request
 
 # 크롬 웹드라이버 연결
