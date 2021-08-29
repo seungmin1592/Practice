@@ -51,6 +51,8 @@ print('pages_num = ' + str(len(pages_num)))
 # list li의 idx값
 i = 0
 
+# csv 파일로 저장할 row를 저장하기 위한 list
+placeLists = []
 
 # 5페이지까지의 데이터를 추출
 for page in pages_num:
@@ -61,11 +63,10 @@ for page in pages_num:
         # 페이징내에서의 리스트 idx값
         list_idx = 0
 
-        # csv 파일로 저장할 row를 저장하기 위한 list
-        place_list = []
-
         # 한 페이지의 place 리스트 무한 반복하여 클릭
+
         while(True):
+            place_list = []
             time.sleep(1)
             # searchiframe으로 전환
             driver.switch_to.default_content()
@@ -117,29 +118,29 @@ for page in pages_num:
                         # ========== place 정보 추출 ==============
 
                         # place 번호
-                        # place_list += i
+                        place_list.append(str(i))
 
                         # place 이름
                         place_name = soup.select_one('#_title ._3XamX').text
                         print('매장명 : ' + place_name)
-                        place_list += [place_name]
+                        place_list.append(place_name)
 
                         # place 위치
                         place_address = soup.select_one(
                             '.place_section_content ._1aj6- ._1h3B_ ._2yqUQ').text
                         print('주소 : ' + place_address)
-                        place_list += place_address
+                        place_list.append(place_address)
 
                         # place 전화번호
                         try:
                             place_tel = soup.select_one(
                                 '.place_section_content ._3xPmJ ._1h3B_ ._3ZA0S').text
                             print('전화번호 : ' + place_tel)
-                            place_list += place_tel
+                            place_list.append(place_tel)
                         except Exception as e:
                             place_tel = ''
                             print('전화번호 : ' + place_tel)
-                            place_list += [place_tel]
+                            place_list.append(place_tel)
 
                         # place 이용정보
                         try:
@@ -147,11 +148,11 @@ for page in pages_num:
                             place_info = soup.select_one(
                                 '.place_section_content ._6aUG7 ._1M_Iz._32wnh + ._1M_Iz ._1h3B_').text
                             print('이용정보 : ' + place_info)
-                            place_list += place_info
+                            place_list.append(place_info)
                         except Exception as e:
                             place_info = ""
                             print('이용정보 :' + place_info)
-                            place_list += [place_info]
+                            place_list.append(place_info)
 
                         # place 소개
                         try:
@@ -171,11 +172,11 @@ for page in pages_num:
                             place_introduce = soup.select_one(
                                 '.place_section_content ._3__3i ._1h3B_ .M_704 .WoYOw').text
                             print('소개 : ' + place_introduce)
-                            place_list += place_introduce
+                            place_list.append(place_introduce)
                         except Exception as e:
                             place_introduce = ""
                             print('소개 : ' + place_introduce)
-                            place_list += [place_introduce]
+                            place_list.append(place_introduce)
 
                         # place 운영시간
                         try:
@@ -208,11 +209,11 @@ for page in pages_num:
                                 print('영업시간 : ' + place_time)
                                 place_time_Arr += [place_time]
 
-                            place_list = [place_time_Arr]
+                            place_list.append(place_time_Arr)
                         except Exception as e:
                             place_time = ""
                             print('영업시간 : ' + place_time)
-                            place_list += [place_time]
+                            place_list.append(place_time_Arr)
 
                         # place image
                         try:
@@ -243,17 +244,17 @@ for page in pages_num:
                                 # urllib.request.urlretrieve(imgUrl, path + str(i) + '_' + str(count) + ".jpg")
                                 count = count + 1
 
-                                place_list += [imagesArr]
+                            place_list.append(imagesArr)
 
                         except Exception as e:
                             print('이미지 : 없음')
-                            place_list += ''
+                            place_list.append('')
                         # =========== place 정보 추출 완료 ============
 
                         # file.write(i + "," + place_name + "," + place_address + "," + place_tel + "," +
                         #            place_introduce + "," + place_time_list + "," + place_info + "," + imgUrl + "\n")
-                        print(place_list)
-                        writer.writerow(place_list)
+                        # print(place_list)
+                        placeLists.append(place_list)
 
                         time.sleep(3)
 
@@ -263,13 +264,18 @@ for page in pages_num:
 
                     # while문으로 다시 진행
                     # continue
-                    break
+                    # break
+
             # 다음 선택할 list가 없을 경우 while 종료
             except Exception as e:
+                print(e)
                 break
-        break
+        # break
+
     except Exception as e:
         print(e)
+
+writer.writerows(placeLists)
 
 
 driver.close
