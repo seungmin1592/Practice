@@ -8,7 +8,7 @@ import urllib.request
 import re
 
 # csv 파일로 저장
-file = open('place2.csv', 'w', encoding='utf-8', newline='')
+file = open('place3.csv', 'w', encoding='utf-8', newline='')
 writer = csv.writer(file)
 writer.writerow(('번호', '매장명', '위치', '전화번호', '이용정보', '소개', '영업시간',  '이미지'))
 
@@ -46,7 +46,7 @@ driver.switch_to.frame('searchIframe')
 time.sleep(2)
 pages_num = driver.find_elements_by_css_selector(
     '.place_didmount ._2ky45 ._2tk2s')
-print('pages_num = ' + str(len(pages_num)))
+# print('pages_num = ' + str(len(pages_num)))
 
 # list li의 idx값
 i = 0
@@ -64,8 +64,8 @@ for page in pages_num:
         list_idx = 0
 
         # 한 페이지의 place 리스트 무한 반복하여 클릭
-        for v in range(10):
-            # while(True):
+        # for v in range(10):
+        while(True):
             place_list = []
             time.sleep(1)
             # searchiframe으로 전환
@@ -79,7 +79,7 @@ for page in pages_num:
             try:
                 list_ldx_chk = bool(driver.find_element_by_css_selector(
                     '#_pcmap_list_scroll_container ul li:nth-child(' + str(list_idx) + ')'))
-                print('list 여부 : ' + str(list_ldx_chk))
+                # print('list 여부 : ' + str(list_ldx_chk))
 
                 # 클락할 place 리스트가 있을 경우
                 if list_ldx_chk:
@@ -91,13 +91,13 @@ for page in pages_num:
                     # 광고 list에 붙는 class명이 없을 경우(광고가 아닐 경우)
                     if advertis_chk:
 
-                        print('광고가 아닌지 여부 : ' + str(advertis_chk))
+                        # print('광고가 아닌지 여부 : ' + str(advertis_chk))
 
                         # list li의 idx값 1씩 증가
                         # 광고일 경우엔 증가 x
                         i += 1
-                        print(
-                            '=================================================================')
+                        # print(
+                        #    '=================================================================')
                         print('===============================' +
                               str(i) + '번 =============================')
 
@@ -122,24 +122,24 @@ for page in pages_num:
 
                         # place 이름
                         place_name = soup.select_one('#_title ._3XamX').text
-                        print('매장명 : ' + place_name)
+                        # print('매장명 : ' + place_name)
                         place_list.append(place_name)
 
                         # place 위치
                         place_address = soup.select_one(
                             '.place_section_content ._1aj6- ._1h3B_ ._2yqUQ').text
-                        print('주소 : ' + place_address)
+                        # print('주소 : ' + place_address)
                         place_list.append(place_address)
 
                         # place 전화번호
                         try:
                             place_tel = soup.select_one(
                                 '.place_section_content ._3xPmJ ._1h3B_ ._3ZA0S').text
-                            print('전화번호 : ' + place_tel)
+                            # print('전화번호 : ' + place_tel)
                             place_list.append(place_tel)
                         except Exception as e:
                             place_tel = ''
-                            print('전화번호 : ' + place_tel)
+                            # print('전화번호 : ' + place_tel)
                             place_list.append(place_tel)
 
                         # place 이용정보
@@ -147,11 +147,11 @@ for page in pages_num:
 
                             place_info = soup.select_one(
                                 '.place_section_content ._6aUG7 ._1M_Iz._32wnh + ._1M_Iz ._1h3B_').text
-                            print('이용정보 : ' + place_info)
+                            # print('이용정보 : ' + place_info)
                             place_list.append(place_info)
                         except Exception as e:
                             place_info = ""
-                            print('이용정보 :' + place_info)
+                            # print('이용정보 :' + place_info)
                             place_list.append(place_info)
 
                         # place 소개
@@ -159,7 +159,7 @@ for page in pages_num:
                             place_introduce_open = driver.find_element_by_css_selector(
                                 '.place_section_content ._3__3i ._1h3B_ .M_704')
                             place_introduce_open.click()
-                            time.sleep(2)
+                            time.sleep(1)
 
                             # 내용 더 보기를 클릭함으로 해당 클래스 안에 text가 더 노출되며 동시에 해당 클래스에 클래스명이 추가된다.
                             # 추가된 클래스명은 html변수에 driver.page_source로 담겨있지 않기 때문에 새롭게 선언해준다.
@@ -171,11 +171,11 @@ for page in pages_num:
 
                             place_introduce = soup.select_one(
                                 '.place_section_content ._3__3i ._1h3B_ .M_704 .WoYOw').text
-                            print('소개 : ' + place_introduce)
+                            # print('소개 : ' + place_introduce)
                             place_list.append(place_introduce)
                         except Exception as e:
                             place_introduce = ""
-                            print('소개 : ' + place_introduce)
+                            # print('소개 : ' + place_introduce)
                             place_list.append(place_introduce)
 
                         # place 운영시간
@@ -206,13 +206,13 @@ for page in pages_num:
 
                             for place_time_list in place_time_lists:
                                 place_time = place_time_list.text
-                                print('영업시간 : ' + place_time)
+                                # print('영업시간 : ' + place_time)
                                 place_time_Arr += [place_time]
 
                             place_list.append(place_time_Arr)
                         except Exception as e:
                             place_time = ""
-                            print('영업시간 : ' + place_time)
+                            # print('영업시간 : ' + place_time)
                             place_list.append(place_time_Arr)
 
                         # place image
@@ -237,7 +237,7 @@ for page in pages_num:
                                 path = 'C:\\Seungmin\\python\\crawling\\images\\ '
                                 # 이미지 url 저장
                                 imgUrl = image.get_attribute("src")
-                                print('이미지 ' + str(count) + ' : ' + imgUrl)
+                                # print('이미지 ' + str(count) + ' : ' + imgUrl)
                                 # 이미지 url을 저장한 list
                                 imagesArr += [imgUrl]
                                 # 이미지 파일 저장
@@ -247,34 +247,26 @@ for page in pages_num:
                             place_list.append(imagesArr)
 
                         except Exception as e:
-                            print('이미지 : 없음')
+                            # print('이미지 : 없음')
                             place_list.append('')
                         # =========== place 정보 추출 완료 ============
 
-                        # file.write(i + "," + place_name + "," + place_address + "," + place_tel + "," +
-                        #            place_introduce + "," + place_time_list + "," + place_info + "," + imgUrl + "\n")
-                        # print(place_list)
+                        # placeLists배열에 place_list 배열의 값을 입력
                         placeLists.append(place_list)
-
-                        time.sleep(3)
 
                     # 광고일 경우 continue로 패스
                     else:
                         continue
 
-                    # while문으로 다시 진행
-                    # continue
-                    # break
-
             # 다음 선택할 list가 없을 경우 while 종료
             except Exception as e:
                 print(e)
                 break
-        # break
 
     except Exception as e:
         print(e)
 
+# csv 파일에 입력
 writer.writerows(placeLists)
 
 
