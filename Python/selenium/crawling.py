@@ -8,7 +8,7 @@ import urllib.request
 import re
 
 # csv 파일로 저장
-file = open('place.csv', 'w', encoding='utf-8', newline='')
+file = open('place2.csv', 'w', encoding='utf-8', newline='')
 writer = csv.writer(file)
 writer.writerow(('번호', '매장명', '위치', '전화번호', '이용정보', '소개', '영업시간',  '이미지'))
 
@@ -64,8 +64,8 @@ for page in pages_num:
         list_idx = 0
 
         # 한 페이지의 place 리스트 무한 반복하여 클릭
-
-        while(True):
+        for v in range(10):
+            # while(True):
             place_list = []
             time.sleep(1)
             # searchiframe으로 전환
