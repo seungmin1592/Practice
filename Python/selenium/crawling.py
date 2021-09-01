@@ -64,8 +64,8 @@ for page in pages_num:
         list_idx = 0
 
         # 한 페이지의 place 리스트 무한 반복하여 클릭
-        # for v in range(10):
-        while(True):
+        for v in range(10):
+            # while(True):
             place_list = []
             time.sleep(1)
             # searchiframe으로 전환
@@ -207,7 +207,7 @@ for page in pages_num:
                             for place_time_list in place_time_lists:
                                 place_time = place_time_list.text
                                 # print('영업시간 : ' + place_time)
-                                place_time_Arr += [place_time]
+                                place_time_Arr += place_time
 
                             place_list.append(place_time_Arr)
                         except Exception as e:
@@ -239,7 +239,7 @@ for page in pages_num:
                                 imgUrl = image.get_attribute("src")
                                 # print('이미지 ' + str(count) + ' : ' + imgUrl)
                                 # 이미지 url을 저장한 list
-                                imagesArr += [imgUrl]
+                                imagesArr += imgUrl
                                 # 이미지 파일 저장
                                 # urllib.request.urlretrieve(imgUrl, path + str(i) + '_' + str(count) + ".jpg")
                                 count = count + 1
