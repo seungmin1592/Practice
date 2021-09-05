@@ -8,9 +8,10 @@ import urllib.request
 import re
 
 # csv 파일로 저장
-file = open('place3.csv', 'w', encoding='utf-8', newline='')
+file = open('place_yogar.csv', 'w', encoding='utf-8', newline='')
 writer = csv.writer(file)
-writer.writerow(('번호', '매장명', '위치', '전화번호', '이용정보', '소개', '영업시간',  '이미지'))
+writer.writerow(('placenum', 'placename', 'placeaddress', 'placephone',
+                'placeinfo', 'placeintro', 'openhour',  'placeimg'))
 
 
 # 크롬 웹드라이버 연결
@@ -28,7 +29,7 @@ time.sleep(2)
 # 검색입력
 elem = driver.find_element_by_css_selector(
     ".panel_wrap .search_box .input_box .input_search")
-elem.send_keys("마포구 헬스장")
+elem.send_keys("마포구 요가원")
 elem.send_keys(Keys.RETURN)
 
 
@@ -46,7 +47,6 @@ driver.switch_to.frame('searchIframe')
 time.sleep(2)
 pages_num = driver.find_elements_by_css_selector(
     '.place_didmount ._2ky45 ._2tk2s')
-# print('pages_num = ' + str(len(pages_num)))
 
 # list li의 idx값
 i = 0
@@ -64,10 +64,10 @@ for page in pages_num:
         list_idx = 0
 
         # 한 페이지의 place 리스트 무한 반복하여 클릭
-        for v in range(10):
-            # while(True):
+        # for v in range(10):
+        while(True):
             place_list = []
-            time.sleep(1)
+            time.sleep(3)
             # searchiframe으로 전환
             driver.switch_to.default_content()
             driver.switch_to.frame('searchIframe')
@@ -77,6 +77,7 @@ for page in pages_num:
 
             # 한 페이지에 클릭할 place가 없을 경우 break를 하기 위한 체크 값
             try:
+                time.sleep(1)
                 list_ldx_chk = bool(driver.find_element_by_css_selector(
                     '#_pcmap_list_scroll_container ul li:nth-child(' + str(list_idx) + ')'))
                 # print('list 여부 : ' + str(list_ldx_chk))
@@ -105,7 +106,7 @@ for page in pages_num:
                         content = driver.find_element_by_css_selector(
                             '#_pcmap_list_scroll_container ul li:nth-child(' + str(list_idx) + ') ._3ZU00 ._3LMxZ:first-child')
                         content.click()
-                        time.sleep(3)
+                        time.sleep(2)
 
                         # place 이름 클릭하면 detailpage iframe으로 driver html 전환
                         driver.switch_to.default_content()
@@ -183,7 +184,7 @@ for page in pages_num:
                             place_introduce_open = driver.find_element_by_css_selector(
                                 '.place_section_content ._2KHqk ._1h3B_ ._2BDci')
                             place_introduce_open.click()
-                            time.sleep(0.5)
+                            time.sleep(1)
 
                             # 내용 더 보기를 클릭함으로 해당 클래스 안에 text가 더 노출되며 동시에 해당 클래스에 클래스명이 추가된다.
                             # 추가된 클래스명은 html변수에 driver.page_source로 담겨있지 않기 때문에 새롭게 선언해준다.
@@ -207,13 +208,13 @@ for page in pages_num:
                             for place_time_list in place_time_lists:
                                 place_time = place_time_list.text
                                 # print('영업시간 : ' + place_time)
-                                place_time_Arr += place_time
+                                place_time_Arr += [place_time]
 
                             place_list.append(place_time_Arr)
                         except Exception as e:
                             place_time = ""
                             # print('영업시간 : ' + place_time)
-                            place_list.append(place_time_Arr)
+                            place_list.append(place_time)
 
                         # place image
                         try:
@@ -233,13 +234,13 @@ for page in pages_num:
                             count = 1
                             imagesArr = []
                             for image in images:
-                                time.sleep(0.5)
+                                time.sleep(1)
                                 path = 'C:\\Seungmin\\python\\crawling\\images\\ '
                                 # 이미지 url 저장
                                 imgUrl = image.get_attribute("src")
                                 # print('이미지 ' + str(count) + ' : ' + imgUrl)
                                 # 이미지 url을 저장한 list
-                                imagesArr += imgUrl
+                                imagesArr += [imgUrl]
                                 # 이미지 파일 저장
                                 # urllib.request.urlretrieve(imgUrl, path + str(i) + '_' + str(count) + ".jpg")
                                 count = count + 1
@@ -253,7 +254,7 @@ for page in pages_num:
 
                         # placeLists배열에 place_list 배열의 값을 입력
                         placeLists.append(place_list)
-
+                        time.sleep(1)
                     # 광고일 경우 continue로 패스
                     else:
                         continue
