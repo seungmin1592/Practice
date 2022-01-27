@@ -1,4 +1,4 @@
-package com.security.demo.auth;
+package com.security.demo.config.auth;
 
 import com.security.demo.model.User;
 import com.security.demo.repository.UserRepository;
