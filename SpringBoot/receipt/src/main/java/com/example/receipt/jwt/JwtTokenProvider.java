@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.receipt.util.Aes256Util;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +41,8 @@ public class JwtTokenProvider {
         String encryptClaims = Aes256Util.AES_Encode(companyno);
         claims.put("companyno", encryptClaims);
         Date now = new Date();
-        return Jwts.builder().setHeaderParam("typ", "JWT").setClaims(claims).setIssuedAt(now).setExpiration(new Date(now.getTime() + this.tokenValidMilisecond)).signWith(SignatureAlgorithm.HS256, this.secretKey).compact();
+
+        return Jwts.builder().setHeaderParam("typ", "JWT").setClaims(claims).setIssuedAt(now).setExpiration(new Date(now.getTime() + this.tokenValidMilisecond)).signWith(SignatureAlgorithm.HS256, this.secretKey.getBytes()).compact();
     }
 
     public Map<String, Object> decryptToken(String token) throws JsonProcessingException {
@@ -59,6 +63,12 @@ public class JwtTokenProvider {
 
         System.out.println("returnMap = " + returnMap);
         return returnMap;
+    }
+
+    // interceptor에서 토큰 유효성을 검증하기 위한 메서드
+    public void checkValid(String token) {
+        System.out.println("checkValid ===" + Jwts.parser().setSigningKey(this.secretKey.getBytes()).parseClaimsJws(token));
+        Jwts.parser().setSigningKey(this.secretKey.getBytes()).parseClaimsJws(token);
     }
 
 }

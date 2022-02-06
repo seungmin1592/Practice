@@ -16,10 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api
 @RestController
@@ -45,8 +42,10 @@ public class RestApiController {
             rMap.put("msg", "토큰 발급 성공");
             rMap.put("status", HttpStatus.OK);
             rMap.put("token", token);
-            return new ResponseEntity(rMap, HttpStatus.OK);
+
+            res.addHeader("Authorization", "Bearer " + token);
         }
+        return new ResponseEntity(rMap, HttpStatus.OK);
     }
 
     @GetMapping("/setReceipt")
@@ -61,7 +60,8 @@ public class RestApiController {
         String token = req.getHeader("X-AUTH-TOKEN");
         pMap.put("title", "test");
         System.out.println("pMap === " + pMap);
-        Object payload = new HashMap();
+
+        Map<String, Object> payload = new HashMap();
 
         try {
             payload = this.jwtTokenProvider.decryptToken(token);
@@ -69,11 +69,20 @@ public class RestApiController {
             var6.printStackTrace();
         }
 
-        Receipt result = this.receiptRepository.findByCompanynoAndCompanyname((String)((Map)payload).get("companyno"), (String)((Map)payload).get("companyname"));
+        System.out.println("payload = " + payload);
+
+        System.out.println("parsing : " + (String)((Map)payload).get("companyno") + "/////" + (String) payload.get("companyname"));
+
+        Receipt result = this.receiptRepository.findByCompanyno((String) payload.get("companyno"));
+
+        System.out.println("result = " + result);
         if (result == null) {
-            System.out.println("성공");
-        } else {
+
             System.out.println("실패");
+        } else {
+            System.out.println("성공");
+            System.out.println("DB에 데이터 저장");
+
         }
 
         return new ResponseEntity(pMap, HttpStatus.OK);
